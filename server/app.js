@@ -3,14 +3,20 @@ const express = require("express");
 const app = express();
 const post = require('./routes/post');
 require('dotenv').config();
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 // middelware
 app.use(express.json())
+  //MIDDLEWARE
+
+  app.use(bodyParser.json({limit: "30mb", extended: true}));
+  app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
+  app.use(cors());
 
 //routes
-app.use('/post', post)
 
-const port =  8080;
+const port =  5000;
 
 const start = async () =>{
     try {
@@ -20,5 +26,7 @@ const start = async () =>{
         console.log(error);
     }
 }
+
+app.use('/posts', post)
 
 start();

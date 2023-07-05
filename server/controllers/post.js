@@ -10,11 +10,14 @@ const getAllPost =async (req, res) => {
 }
 
 const createPost = async (req, res) => {
+    const post = req.body;
+    const newPost = Post(post);
     try {
-        const newPost = await Post.create(req.body);
-        res.status(201).json({newPost});
+        await newPost.save();
+        res.status(201).json(newPost);
     } catch (error) {
         res.status(500).json({ msg:error });
+        console.log(error);
     }
 }
 
